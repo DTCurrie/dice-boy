@@ -12,8 +12,10 @@ const commandString = `${prefix}${command}`;
 
 client.on("message", (message) => {
   try {
-    if (message.content.substring(0, commandString.length) === commandString) {
-      const messageArr = message.content.split(" ");
+    const content = message.content.trim();
+
+    if (content.substring(0, commandString.length) === commandString) {
+      const messageArr = content.split(" ");
       const rollCommand = messageArr[1];
 
       if (rollCommand === RollCommands.Skill) {
