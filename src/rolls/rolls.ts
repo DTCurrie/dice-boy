@@ -3,65 +3,86 @@ import { RollResults } from "rpg-dice-roller/types/results";
 
 export const roller = new DiceRoller();
 
-export interface SkillRollResult {
+export const skillRollFormula = `dice?[target]@tag? difficulty?`;
+export const skillRollRegex = /^\d+?\[\d+\](@\d+)?(\s\d+)?$/;
+
+const getOutput = (
+  value: string,
+  success: boolean,
+  criticalSuccess: boolean,
+  criticalFailure: boolean
+): string => {
+  let output = `${value}`;
+  if (success) {
+    output = criticalSuccess ? `_**${value}**_` : `_${value}_`;
+  } else {
+    output = criticalFailure ? `~~**${value}**~~` : `~~${value}~~`;
+  }
+
+  return output;
+};
+
+export interface SkillRollData {
   index: number;
   value: number;
   complication: boolean;
   output: string;
 }
 
+export interface SkillRollResult {
+  successes: number;
+  success: boolean;
+  complication: boolean;
+  actionPoints: number;
+  results: SkillRollData[];
+}
+
 export const skillRoll = (
-  dice: number,
-  threshold: number,
-  difficulty: number,
-  criticals: {
-    success: number;
-    failure: number;
-  } = { success: 1, failure: 20 }
-): string => {
-  const { success, failure } = criticals;
+  dice = 2,
+  target = 4,
+  tag = 1,
+  difficulty = 0
+): SkillRollResult => {
   const diceCommand = `${dice}d20`;
   const result = roller.roll(diceCommand) as DiceRoll;
   let successes = 0;
 
   const results = (result.rolls[0] as RollResults).rolls.reduce(
     (accumulator, { value }, index) => {
-      const isSuccess = value <= threshold;
-      const isCritSuccess = value <= success;
-      const isCritFailure = value >= failure;
+      const success = value <= target;
+      const criticalSuccess = value <= tag;
+      const criticalFailure = value >= 20;
 
-      let output = `${value}`;
-      if (isSuccess) {
-        successes += 1;
-        output = `_${value}_`;
-
-        if (isCritSuccess) {
-          successes += 1;
-          output = `_**${value}**_`;
-        }
-      } else {
-        output = isCritFailure ? `~~**${value}**~~` : `~~${value}~~`;
+      if (success) {
+        successes += criticalSuccess ? 2 : 1;
       }
+
+      const output = getOutput(
+        `${value}`,
+        success,
+        criticalSuccess,
+        criticalFailure
+      );
 
       accumulator.push({
         index,
         value,
-        complication: isCritFailure,
+        complication: criticalFailure,
         output,
       });
 
       return accumulator;
     },
-    [] as SkillRollResult[]
+    [] as SkillRollData[]
   );
 
-  const didPass = successes >= difficulty;
+  const actionPoints = successes - difficulty;
 
-  const resultMessage = `[${results.map((r) => r.output).join(", ")}]: You ${
-    didPass ? "succeed" : "fail"
-  } with ${successes} success${successes !== 1 ? "es" : ""}${
-    results.find((r) => r.complication) ? " (complication!)" : ""
-  }`;
-
-  return resultMessage;
+  return {
+    successes,
+    success: successes >= difficulty,
+    complication: !!results.find((r) => r.complication),
+    actionPoints: actionPoints > 0 ? actionPoints : 0,
+    results,
+  };
 };

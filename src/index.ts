@@ -1,58 +1,34 @@
+import path from "path";
+
+import { CommandoClient } from "discord.js-commando";
 import { config } from "dotenv";
 
-import { client } from "./client/client";
-import { command, prefix, RollCommands } from "./config";
-import { skillRoll } from "./rolls/rolls";
+import { command, prefix } from "./config";
 
 config();
 
-client.login(process.env.DISCORD_TOKEN);
+const commandPrefix = `${prefix}${command}`;
 
-const commandString = `${prefix}${command}`;
-
-client.on("message", (message) => {
-  try {
-    const content = message.content.trim();
-
-    if (content.substring(0, commandString.length) === commandString) {
-      const messageArr = content.split(" ");
-      const rollCommand = messageArr[1];
-
-      if (rollCommand === RollCommands.Skill) {
-        const skillArr = messageArr[2].split("@");
-        const dice = parseInt(skillArr[0]);
-        const target = parseInt(skillArr[1]);
-        const tag = parseInt(skillArr[1].split("#")[1]);
-        const difficulty = parseInt(messageArr[3]);
-
-        if (
-          skillArr.length !== 2 ||
-          isNaN(dice) ||
-          isNaN(target) ||
-          isNaN(difficulty)
-        ) {
-          message.channel.send(
-            "Did not recognize skill roll format, please use `!roll skill {dice}@{target}[#{tag}] {difficulty}`"
-          );
-
-          return;
-        }
-
-        const result = isNaN(tag)
-          ? skillRoll(dice, target, difficulty)
-          : skillRoll(dice, target, difficulty, {
-              success: tag,
-              failure: 20,
-            });
-
-        message.channel.send(result);
-      }
-    }
-  } catch (error) {
-    message.channel.send(
-      `Oops "${message.content}" does not follow Vault-Tech's Dice Boy recommended command structure. Please check your formatting and try again!`
-    );
-
-    console.error(`Error: "${message.content}" failed`, error);
-  }
+export const client = new CommandoClient({
+  commandPrefix,
+  owner: process.env.OWNER_ID,
+  invite: process.env.INVITE_LINK,
 });
+
+client.registry
+  .registerDefaultTypes()
+  .registerGroups([
+    [
+      "rolls",
+      "**rolls**: 1. Be Smart 2. Be Safe 3. Don't Screw Up: _Good Luck Out There!_",
+    ],
+  ])
+  .registerDefaultGroups()
+  .registerDefaultCommands()
+  .registerCommandsIn(path.join(__dirname, "commands"));
+
+client.once("ready", () => {
+  console.log("Dice Boy is ready!");
+});
+
+client.login(process.env.DISCORD_TOKEN);

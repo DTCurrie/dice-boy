@@ -1,6 +1,9 @@
 export const prefix = "!";
-export const command = "roll";
+export const command = "vats";
+
+export const special = "S.P.E.C.I.A.L";
 
 export enum RollCommands {
+  Help = "help",
   Skill = "skill",
 }
