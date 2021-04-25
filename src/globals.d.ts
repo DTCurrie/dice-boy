@@ -1,3 +1,5 @@
+// Generated from discord.js-menu@2.3.1/index.js
+
 declare module "discord.js-menu" {
   import { EventEmitter } from "events";
 
@@ -83,7 +85,7 @@ declare module "discord.js-menu" {
   /**
    * A page object that the menu can display.
    */
-  export class Page {
+  class Page {
     /**
      * Creates a menu page.
      * @param {string} name The name of this page, used as a destination for reactions.

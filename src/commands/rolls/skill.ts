@@ -1,6 +1,12 @@
-import { MessageEmbed, TextChannel } from "discord.js";
+import {
+  MessageEmbed,
+  MessageEmbedAuthor,
+  MessageEmbedThumbnail,
+  TextChannel,
+} from "discord.js";
 import { Command, CommandoClient, CommandoMessage } from "discord.js-commando";
 import { Menu } from "discord.js-menu";
+
 import { special } from "../../config";
 
 import {
@@ -19,6 +25,16 @@ interface SkillRollCommandArgs {
 }
 
 class SkillRollCommand extends Command {
+  private authorData = {
+    author: {
+      iconURL: this.client.user ? this.client.user.avatar : null,
+      name: "Dice Boy",
+    } as MessageEmbedAuthor,
+    thumbnail: {
+      proxyURL: this.client.user ? this.client.user.avatar : null,
+    } as MessageEmbedThumbnail,
+  };
+
   constructor(client: CommandoClient) {
     super(client, {
       name: "skill",
@@ -119,6 +135,7 @@ class SkillRollCommand extends Command {
         {
           name: "main",
           content: new MessageEmbed({
+            ...this.authorData,
             title: "Skill Roll",
             description:
               "It's time to make a Skill Roll! This menu will guide you through the steps. Click the dice to start. You can click the arrow to restart or the crossmark to cancel. ",
@@ -159,6 +176,7 @@ class SkillRollCommand extends Command {
         {
           name: "dice",
           content: new MessageEmbed({
+            ...this.authorData,
             title: "Step 1: Dice",
             description:
               "Choose how many dice to roll. The default is 2, but you can spend AP to purchase up to 3 more for a maximum of 5.",
@@ -175,6 +193,7 @@ class SkillRollCommand extends Command {
         {
           name: "special",
           content: new MessageEmbed({
+            ...this.authorData,
             title: `Step 2: ${special}`,
             description: `Choose the value of the ${special} attribute you are using.`,
           }),
@@ -193,6 +212,7 @@ class SkillRollCommand extends Command {
         {
           name: "skill",
           content: new MessageEmbed({
+            ...this.authorData,
             title: "Step 3: Skill",
             description: "Choose the value of the Skill you are using.",
           }),
@@ -211,6 +231,7 @@ class SkillRollCommand extends Command {
         {
           name: "tag",
           content: new MessageEmbed({
+            ...this.authorData,
             title: "Step 4: Tag",
             description:
               "Choose whether or not you are using a Tagged Skill. This will increase the critical success threshold from 1 to the Tagged Skill's value.",
@@ -225,6 +246,7 @@ class SkillRollCommand extends Command {
         {
           name: "difficulty",
           content: new MessageEmbed({
+            ...this.authorData,
             title: "Step 5: Difficulty",
             description:
               "Choose the difficulty for the roll. This is the number of successes needed to pass.",
@@ -243,6 +265,7 @@ class SkillRollCommand extends Command {
         {
           name: "results",
           content: new MessageEmbed({
+            ...this.authorData,
             title: "Results",
             fields: [
               {
@@ -284,9 +307,10 @@ class SkillRollCommand extends Command {
     message: CommandoMessage,
     { formula }: { formula: string }
   ): null => {
-    function showError(): null {
+    const showError = (): null => {
       message.say(
         new MessageEmbed({
+          ...this.authorData,
           title: "Error",
           description: `Uh oh, there was an error parsing your formula. Please use the Vault-Tech approved \`${skillRollFormula}\` formula and try again!\n
             Here is a few examples:
@@ -306,7 +330,7 @@ class SkillRollCommand extends Command {
       );
 
       return null;
-    }
+    };
 
     if (formula === "i" || formula === "interactive") {
       return this.interactive(message);
@@ -316,7 +340,10 @@ class SkillRollCommand extends Command {
       const tagSymbol = formula.indexOf("@");
       const space = formula.indexOf(" ");
 
-      const dice = parseInt(formula.substring(0, targetOpenBrace));
+      const dice =
+        targetOpenBrace > 0
+          ? parseInt(formula.substring(0, targetOpenBrace))
+          : undefined;
 
       const target = parseInt(
         formula.substring(targetOpenBrace + 1, targetCloseBrace)
@@ -333,7 +360,7 @@ class SkillRollCommand extends Command {
         : undefined;
 
       if (
-        isNaN(dice) ||
+        (dice && isNaN(dice)) ||
         isNaN(target) ||
         (tag && isNaN(tag)) ||
         (difficulty && isNaN(difficulty))
@@ -351,6 +378,7 @@ class SkillRollCommand extends Command {
 
       message.say(
         new MessageEmbed({
+          ...this.authorData,
           title: "Results",
           color: success ? "#33e83c" : "#eb4034",
           fields: [

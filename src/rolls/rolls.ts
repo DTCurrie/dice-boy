@@ -4,7 +4,7 @@ import { RollResults } from "rpg-dice-roller/types/results";
 export const roller = new DiceRoller();
 
 export const skillRollFormula = `dice?[target]@tag? difficulty?`;
-export const skillRollRegex = /^\d+?\[\d+\](@\d+)?(\s\d+)?$/;
+export const skillRollRegex = /(\d+)?\[\d+\](@\d+)?(\s\d+)?/;
 
 const getOutput = (
   value: string,
