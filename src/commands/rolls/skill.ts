@@ -38,10 +38,10 @@ class SkillRollCommand extends Command {
     });
   }
 
-  getResultsText = (results: SkillRollData[]): string =>
+  private getResultsText = (results: SkillRollData[]): string =>
     `[ ${results.map((r) => r.output).join(", ")} ]`;
 
-  interactive = (message: CommandoMessage): null => {
+  private interactive = (message: CommandoMessage): null => {
     let specialValue = 4;
     let skillValue = 0;
     let roll: SkillRollResult;
@@ -280,7 +280,10 @@ class SkillRollCommand extends Command {
     return null;
   };
 
-  run = (message: CommandoMessage, { formula }: { formula: string }): null => {
+  public run = (
+    message: CommandoMessage,
+    { formula }: { formula: string }
+  ): null => {
     function showError(): null {
       message.say(
         new MessageEmbed({
