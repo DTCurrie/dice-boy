@@ -1,9 +1,9 @@
-import { DiceRoll, DiceRoller } from "rpg-dice-roller";
+import { DiceRoll } from "rpg-dice-roller";
 import { RollResults } from "rpg-dice-roller/types/results";
 
-export const roller = new DiceRoller();
+import { roller } from "./roller";
 
-export const skillRollFormula = `dice?[target]@tag? difficulty?`;
+export const skillRollFormula = `dice[target]@tag difficulty`;
 export const skillRollRegex = /(\d+)?\[\d+\](@\d+)?(\s\d+)?/;
 
 const getOutput = (

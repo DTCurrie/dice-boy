@@ -18,10 +18,7 @@ export const client = new CommandoClient({
 client.registry
   .registerDefaultTypes()
   .registerGroups([
-    [
-      "rolls",
-      "**rolls**: 1. Be Smart 2. Be Safe 3. Don't Screw Up: _Good Luck Out There!_",
-    ],
+    ["rolls", "**rolls**: 1. Be Smart 2. Be Safe 3. Don't Screw Up"],
   ])
   .registerDefaultGroups()
   .registerDefaultCommands()
