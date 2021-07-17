@@ -21,7 +21,12 @@ client.registry
     ["rolls", "**rolls**: 1. Be Smart 2. Be Safe 3. Don't Screw Up"],
   ])
   .registerDefaultGroups()
-  .registerDefaultCommands()
+  .registerDefaultCommands({
+    commandState: false,
+    prefix: false,
+    eval: false,
+    help: true,
+  })
   .registerCommandsIn(path.join(__dirname, "commands"));
 
 client.once("ready", () => {

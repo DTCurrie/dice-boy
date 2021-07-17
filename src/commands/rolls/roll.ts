@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { Command, CommandoClient, CommandoMessage } from "discord.js-commando";
 
-import { roll } from "../../rolls/roll";
+import { roll } from "../../utils/rolls/roll";
 import { getAuthorData } from "../../utils/author";
 
 class RollCommand extends Command {
@@ -12,12 +12,12 @@ class RollCommand extends Command {
       group: "rolls",
       memberName: "roll",
       description:
-        "Try your luck with some dice! Uses standard dice rolling notation.",
+        "Try your luck with some dice! Uses [standard dice notation](https://greenimp.github.io/rpg-dice-roller/guide/notation/).",
       args: [
         {
           key: "formula",
           type: "string",
-          prompt: `Enter a roll using the [standard dice notation](https://en.wikipedia.org/wiki/Dice_notation).`,
+          prompt: `Enter a roll using [standard dice notation](https://greenimp.github.io/rpg-dice-roller/guide/notation/).`,
         },
       ],
     });
@@ -48,7 +48,7 @@ class RollCommand extends Command {
           ...authorData,
           title: "Error",
           color: "#e6b032",
-          description: `Uh oh, there was a problem with your formula. Please use the [standard dice notation](https://en.wikipedia.org/wiki/Dice_notation) and try again!
+          description: `Uh oh, there was a problem with your formula. Please use [standard dice notation](https://greenimp.github.io/rpg-dice-roller/guide/notation/) and try again!
           \n\t_Error: ${error.message}_`,
         })
       );
