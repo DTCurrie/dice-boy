@@ -9,11 +9,9 @@ To run a command with **Dice Boy**, use the `!vats` command or `@Dice Boy` comma
 Use the `!vats help <command>` command to view detailed information about a specific command.
 Use `!vats help all` help all to view a list of all commands, not just available ones.
 
-Available commands for **Dice Boy**
+### Rolls: 1. Be Smart 2. Be Safe 3. Don't Screw Up
 
-### Rolls: 1. Be Smart 2. Be Safe 3. Don't Screw Up!
-
-#### `combat`
+#### `combat` / `c`
 
 Spread Democracy for Uncle Sam! Uses the Vault-Tec recommended `{dice} {damage type} [{effects,...}] [{hit location}] [{hit location type}]` notation.
 
@@ -29,11 +27,11 @@ Spread Democracy for Uncle Sam! Uses the Vault-Tec recommended `{dice} {damage t
 | ---------------------------------------------------- |
 ```
 
-#### `roll`
+#### `roll` / `r`
 
 Try your luck with some dice! Uses [standard dice notation](https://greenimp.github.io/rpg-dice-roller/guide/notation/).
 
-#### `skill`
+#### `skill` / `s`
 
 Use your skills to help your fellow citizens! Uses the Vault-Tec recommended `{target} [d{dice}][t{tag}][c{complication}] [{difficulty}]` notation.
 
@@ -49,9 +47,9 @@ Use your skills to help your fellow citizens! Uses the Vault-Tec recommended `{t
 | ----------------------------------------- |
 ```
 
-### Rules: Knowledge is power, and knowing is half the battle!
+### Rules: Knowledge is power, and knowing is half the battle
 
-#### `injury`
+#### `injury` / `i`
 
 The outside world can never hurt you! Uses the Vault-Tec recommended `{hit location} [{hit location type}]` notation.
 
