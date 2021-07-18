@@ -13,7 +13,7 @@ Use `!vats help all` help all to view a list of all commands, not just available
 
 #### `combat` / `c`
 
-Spread Democracy for Uncle Sam! Uses the Vault-Tec recommended `{dice} {damage type} [{effects,...}] [{hit location}] [{hit location type}]` notation.
+Spread Democracy for Uncle Sam! Uses the Vault-Tec recommended `!vats c {dice} {damage type} [{effects,...}] [{hit location}] [{hit location type}]` notation.
 
 ```bash
 | Description                    | Formula             |
@@ -29,11 +29,11 @@ Spread Democracy for Uncle Sam! Uses the Vault-Tec recommended `{dice} {damage t
 
 #### `roll` / `r`
 
-Try your luck with some dice! Uses [standard dice notation](https://greenimp.github.io/rpg-dice-roller/guide/notation/).
+Try your luck with some dice! Uses the Vault-tec recommended `!vats r {formula}` [dice notation](https://greenimp.github.io/rpg-dice-roller/guide/notation/).
 
 #### `skill` / `s`
 
-Use your skills to help your fellow citizens! Uses the Vault-Tec recommended `{target} [d{dice}][t{tag}][c{complication}] [{difficulty}]` notation.
+Use your skills to help your fellow citizens! Uses the Vault-Tec recommended `!vats s {target} [d{dice}][t{tag}][c{complication}] [{difficulty}]` notation.
 
 ```bash
 | Description                | Formula      |
@@ -51,7 +51,7 @@ Use your skills to help your fellow citizens! Uses the Vault-Tec recommended `{t
 
 #### `injury` / `i`
 
-The outside world can never hurt you! Uses the Vault-Tec recommended `{hit location} [{hit location type}]` notation.
+The outside world can never hurt you! Uses the Vault-Tec recommended `!vats i {hit location} [{hit location type}]` notation.
 
 ```bash
 | Description      | Formula |
