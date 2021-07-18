@@ -3,6 +3,7 @@ import { Command, CommandoClient, CommandoMessage } from "discord.js-commando";
 
 import { roll } from "../../utils/rolls/roll";
 import { getAuthorData } from "../../utils/author";
+import { infoColor, warningColor } from "../../utils/color";
 
 class RollCommand extends Command {
   constructor(client: CommandoClient) {
@@ -36,7 +37,7 @@ class RollCommand extends Command {
         new MessageEmbed({
           ...authorData,
           title: "Results",
-          color: "#0099ff",
+          color: infoColor,
           description: "_Good luck out there!_",
           fields: [{ name: "\u200B", value: output }],
           timestamp: Date.now(),
@@ -47,7 +48,7 @@ class RollCommand extends Command {
         new MessageEmbed({
           ...authorData,
           title: "Error",
-          color: "#e6b032",
+          color: warningColor,
           description: `Uh oh, there was a problem with your formula. Please use [standard dice notation](https://greenimp.github.io/rpg-dice-roller/guide/notation/) and try again!
           \n\t_Error: ${error.message}_`,
         })

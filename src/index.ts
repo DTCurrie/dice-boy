@@ -18,7 +18,8 @@ export const client = new CommandoClient({
 client.registry
   .registerDefaultTypes()
   .registerGroups([
-    ["rolls", "**rolls**: 1. Be Smart 2. Be Safe 3. Don't Screw Up"],
+    ["rolls", "**rolls**: 1. Be Smart 2. Be Safe 3. Don't Screw Up!"],
+    ["rules", "**rules**: Knowledge is power, and knowing is half the battle!"],
   ])
   .registerDefaultGroups()
   .registerDefaultCommands({

@@ -18,10 +18,18 @@ import {
   combatNotation,
   combatNotationRegex,
 } from "../../utils/rolls/notation";
-import { DamageEffect, DamageEffectType } from "../../utils/damage-effect";
-import { DamageType } from "../../utils/damage";
-import { getHitLocationText, HitLocationType } from "../../utils/hit-locations";
-import { capitalize } from "../../utils/capitalize";
+import {
+  DamageEffect,
+  DamageEffectType,
+} from "../../utils/damage/damage-effect";
+import { DamageType } from "../../utils/damage/damage";
+import {
+  getHitLocationText,
+  HitLocation,
+  HitLocationType,
+} from "../../utils/hit-locations";
+import { capitalize } from "../../utils/text/capitalize";
+import { failureColor, successColor, warningColor } from "../../utils/color";
 
 class CombatRollCommand extends Command {
   constructor(client: CommandoClient) {
@@ -36,7 +44,7 @@ class CombatRollCommand extends Command {
         {
           key: "formula",
           type: "string",
-          prompt: `Enter a combat roll using the \`${combatNotation}\` notation.`,
+          prompt: `Enter a combat roll using the \`${combatNotation}\` notation.\nNote: \`{}\` indicate where a value should be entered, \`[]\` indicate an optional value. Do not include either \`{}\` or \`[]\` in your formula.\n`,
         },
       ],
     });
@@ -64,7 +72,18 @@ class CombatRollCommand extends Command {
     this.showResultsMessage(
       message,
       options,
-      combatReroll(2, options, results)
+      combatReroll(options.dice < 2 ? options.dice : 2, options, results)
+    );
+
+  private rerollThree = (
+    message: CommandoMessage,
+    options: CombatRollOptions,
+    results: CombatRollResult
+  ): void =>
+    this.showResultsMessage(
+      message,
+      options,
+      combatReroll(options.dice < 3 ? options.dice : 3, options, results)
     );
 
   private rerollAll = (
@@ -97,7 +116,7 @@ class CombatRollCommand extends Command {
         content: new MessageEmbed({
           ...getAuthorData(this.client),
           title: success ? "Success!" : "Failure!",
-          color: success ? "#33e83c" : "#eb4034",
+          color: success ? successColor : failureColor,
 
           description: success
             ? "> Your efforts will help build a better tomorrow!"
@@ -140,7 +159,7 @@ class CombatRollCommand extends Command {
               results,
               rolls,
             }),
-          "2️⃣": () =>
+          "🤞": () =>
             this.rerollTwo(message, options, {
               damage,
               effects,
@@ -149,8 +168,8 @@ class CombatRollCommand extends Command {
               results,
               rolls,
             }),
-          "3️⃣": () =>
-            this.rerollTwo(message, options, {
+          "🎰": () =>
+            this.rerollThree(message, options, {
               damage,
               effects,
               hitLocation,
@@ -199,7 +218,7 @@ class CombatRollCommand extends Command {
 | ---------------------------------------------------- |
             \`\`\`\n
             ${errorMessage || ""}`,
-          color: "#e6b032",
+          color: warningColor,
         })
       );
 
@@ -218,32 +237,24 @@ class CombatRollCommand extends Command {
             arg.search(combatDamageEffectNotation) >= 0 ||
             arg.search(combatDamageEffectsNotation) >= 0
         );
-        console.log("damageEffectArgs", damageEffectArgs);
 
         const damageEffects: DamageEffect[] =
           (damageEffectArgs || "").split(",").map((effect) => {
             const effectArgs = effect.split(/(\d+)/);
-            console.log("damageEffects effectArgs", effectArgs);
             const type = effectArgs[0] as DamageEffectType;
-            console.log("damageEffects type", type);
+            const rating = effectArgs[1];
             const result: DamageEffect = {
               type,
+              rating: rating ? parseInt(rating) : undefined,
             };
 
-            if (effectArgs[1]) {
-              result.rating = parseInt(effectArgs[1]);
-            }
-
-            console.log("damageEffects result", result);
             return result;
           }) || [];
-
-        console.log("damageEffects", damageEffects);
 
         const hitLocation = optionArgs.find(
           (arg) =>
             arg.search(new RegExp(`^${combatHitLocationNotation.source}$`)) >= 0
-        );
+        ) as HitLocation | undefined;
 
         const hitLocationType =
           (optionArgs.find(

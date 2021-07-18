@@ -1,7 +1,7 @@
 {
   "name": "dice-boy",
   "version": "0.1.0",
-  "description": "A Fallout 2d20 dice rolling bot for Discord",
+  "description": "A Fallout RPG dice rolling bot for Discord",
   "main": "dist/index.js",
   "devDependencies": {
     "@types/events": "3.0.0",

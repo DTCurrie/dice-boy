@@ -1,25 +1,26 @@
 import { DiceRoll } from "rpg-dice-roller";
 import { RollResult, RollResults } from "rpg-dice-roller/types/results";
-import { DamageType, damageTypeText } from "../damage";
+import { DamageType, damageTypeText } from "../damage/damage";
 
 import {
   DamageEffect,
   DamageEffectResult,
   DamageEffectType,
-} from "../damage-effect";
+} from "../damage/damage-effect";
 import {
   getHitLocation,
   getHitLocationText,
+  HitLocation,
   HitLocationType,
 } from "../hit-locations";
-import { pluralize } from "../pluralize";
+import { pluralize } from "../text/pluralize";
 import { roller } from "./roller";
 
 export interface CombatRollOptions {
   dice: number;
   damageType: DamageType;
   damageEffects?: DamageEffect[];
-  hitLocation?: string;
+  hitLocation?: HitLocation;
   hitLocationType?: HitLocationType;
 }
 
@@ -40,10 +41,10 @@ export interface CombatRollEffect {
 export interface CombatRollResult {
   damage: number;
   effects: DamageEffectResult[];
+  hitLocation: HitLocation;
+  hitLocationType: HitLocationType;
   results: CombatRollData[];
   rolls: RollResult[];
-  hitLocation: string;
-  hitLocationType: HitLocationType;
 }
 
 const getOutput = (value: number, effect: number): string => {
@@ -78,7 +79,11 @@ const getCombatValue = (value: number): { damage: number; effect: number } => ({
 
 const getRollResults = (
   rolls: RollResult[]
-): { damage: number; effects: number; results: CombatRollData[] } => {
+): {
+  damage: number;
+  effects: number;
+  results: CombatRollData[];
+} => {
   const results = rolls.reduce((accumulator, { value }: RollResult, index) => {
     const { damage, effect } = getCombatValue(value);
     const output = getOutput(value, effect);
@@ -102,7 +107,7 @@ const getRollResults = (
 
 export const hitLocationRoll = (
   type: HitLocationType = HitLocationType.Default
-): string => {
+): HitLocation => {
   const diceCommand = `1d20`;
   const { rolls } = roller.roll(diceCommand) as DiceRoll;
   const rollResult = (rolls as RollResults[])[0].rolls[0].value;
@@ -130,18 +135,16 @@ const getEffects = (
           text: `Reduce the number of Combat Dice a target’s cover provides by ${value} permanently. If the target is not in cover, instead reduce the ${damageTypeText[damageType]} DR of the location struck by ${value}.`,
         });
         break;
-      case DamageEffectType.Burst:
+      case DamageEffectType.Burst: {
+        const target = pluralize("target", value);
+        const unit = pluralize("unit", value);
+
         effects.push({
           type,
-          text: `The attack hits ${value} additional ${pluralize(
-            "target",
-            value
-          )} within Close range of the primary target, consuming ${value} additional ${pluralize(
-            "unit",
-            value
-          )} of ammunition from the weapon.`,
+          text: `The attack hits ${value} additional ${target} within Close range of the primary target, consuming ${value} additional ${unit} of ammunition from the weapon.`,
         });
         break;
+      }
       case DamageEffectType.Persistent:
         effects.push({
           type,
@@ -156,25 +159,24 @@ const getEffects = (
           } DR.`,
         });
         break;
-      case DamageEffectType.Radioactive:
+      case DamageEffectType.Radioactive: {
+        const point = pluralize("point", value);
+
         effects.push({
           type,
-          text: `The target also suffers ${value} ${pluralize(
-            "point",
-            value
-          )} of radiation damage. This radiation damage is totalled and applied separately, after a character has suffered the normal damage from the attack.`,
+          text: `The target also suffers ${value} ${point} of radiation damage. This radiation damage is totalled and applied separately, after a character has suffered the normal damage from the attack.`,
         });
         break;
+      }
       case DamageEffectType.Spread: {
         const hitLocation = hitLocationRoll(hitLocationType);
+        const spreadDamage = Math.floor(damage / 2);
+        const location = getHitLocationText(hitLocationType, hitLocation);
+        const text = `Your attack inflicts ${spreadDamage} additional damage to the target's ${location}.`;
+
         effects.push({
           type,
-          text: `Your attack inflicts ${Math.floor(
-            damage / 2
-          )} additional damage to the target's ${getHitLocationText(
-            hitLocationType,
-            hitLocation
-          )}.`,
+          text,
         });
         break;
       }
@@ -201,7 +203,7 @@ const handleRollResults = (
   damageType: DamageType,
   effectOccurences: number,
   effectTypes: DamageEffect[],
-  hitLocation: string,
+  hitLocation: HitLocation,
   hitLocationType: HitLocationType,
   results: CombatRollData[],
   rolls: RollResult[]

@@ -11,7 +11,8 @@ import {
 } from "../../utils/rolls/skill-roll";
 import { getAuthorData } from "../../utils/author";
 import { skillNotation, skillNotationRegex } from "../../utils/rolls/notation";
-import { getNextSymbolOrSpace } from "../../utils/parse";
+import { getNextSymbolOrSpace } from "../../utils/text/parse";
+import { failureColor, successColor, warningColor } from "../../utils/color";
 
 class SkillRollCommand extends Command {
   constructor(client: CommandoClient) {
@@ -26,7 +27,7 @@ class SkillRollCommand extends Command {
         {
           key: "formula",
           type: "string",
-          prompt: `Enter a skill roll using the \`${skillNotation}\` notation.`,
+          prompt: `Enter a skill roll using the \`${skillNotation}\` notation.\nNote: \`{}\` indicate where a value should be entered, \`[]\` indicate an optional value. Do not include either \`{}\` or \`[]\` in your formula.\n`,
         },
       ],
     });
@@ -78,7 +79,7 @@ class SkillRollCommand extends Command {
         content: new MessageEmbed({
           ...getAuthorData(this.client),
           title: success ? "Success!" : "Failure!",
-          color: success ? "#33e83c" : "#eb4034",
+          color: success ? successColor : failureColor,
 
           description: success
             ? "> Your efforts will help build a better tomorrow!"
@@ -158,7 +159,7 @@ class SkillRollCommand extends Command {
 | A little bit of everything | 10 3dt4c19 2 |
 | ----------------------------------------- |
             \`\`\``,
-          color: "#e6b032",
+          color: warningColor,
         })
       );
 
