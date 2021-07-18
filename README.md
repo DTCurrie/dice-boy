@@ -65,5 +65,5 @@ The outside world can never hurt you! Uses the Vault-Tec recommended `{hit locat
 
 ### Utility
 
-`help`: Displays a list of available commands, or detailed information for a specified command.
-`ping`: Checks the bot's ping to the Discord server.
+- `help`: Displays a list of available commands, or detailed information for a specified command.
+- `ping`: Checks the bot's ping to the Discord server.
