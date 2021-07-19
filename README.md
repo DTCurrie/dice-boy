@@ -29,7 +29,7 @@ First, here is a review of the steps for making an attack from the _Fallout Core
 >    - Resistances: The target reduces the total damage inflicted by their Damage Resistance against the attack’s damage type, on the location hit. Characters and creatures have different DRs for different types of damage: physical, energy, radiation, and poison.
 > 5. REDUCE AMMUNITION: If you made a ranged attack, remove one shot of ammunition, plus any additional shots of ammunition spent on the attack. If you made a thrown weapon attack, remove the thrown weapon from your inventory.
 
-For step 1, Nate is choosing his Piercing Combat Rifle and targeting the Mr. Gutsy's optics specifically. This will increase the difficulty of the roll by 1.
+For step 1, Nate is choosing his Vicious Piercing Combat Rifle and targeting the Mr. Gutsy's optics specifically. This will increase the difficulty of the roll by 1.
 
 For step 2, Nate needs to make an **AGI + Small Guns** check to make a shot with his rifle. Let's determine the parameters for this skill check:
 
@@ -90,6 +90,14 @@ Use the various roll commands to automate checks in Fallout RPG.
 #### `combat` / `c`
 
 Spread Democracy for Uncle Sam! Uses the Vault-Tec recommended `!vats c {dice} {damage type} [{effects,...}] [{hit location}] [{hit location type}]` notation.
+
+Here is breakdown of the notation parameters:
+
+- Dice _(required)_: How many combat dice (CD) to roll.
+- Damage Type _(required)_: The Damage Type being inflicted.
+- Effects (optional): A comma delimited list of effects for the weapon
+- Hit Location (optional): The hit location to aim for, if not provided it will be determined automatically
+- Hit Location Type (optional): The **Hit Locations Table** to use. If not provide it will use the `default` table.
 
 The `combat` command will automate your damange rolls. This includes calculating damage, damage effects, and hit locations based on the provided options.
 
@@ -167,11 +175,23 @@ Try your luck with some dice! Uses the Vault-tec recommended `!vats r {formula}`
 
 The `roll` command is just a dice roller following standard dice notation. There is no further logic included in the command.
 
+For example, to simple roll 1 20-sided die:
+
+`!vats r 1d20`
+
 #### `skill` / `s`
 
 Use your skills to help your fellow citizens! Uses the Vault-Tec recommended `!vats s {target} [d{dice}][t{tag}][c{complication}] [{difficulty}]` notation.
 
 The `skill` command will automate skill checks, including calculating success, action points earned, and complications based on the provided options.
+
+Here is breakdown of the notation parameters:
+
+- Target _(required)_: The Attribute + Skill target threshold for the skill check.
+- Dice (optional): The amount of dice to roll, will default to 2.
+- Tag (optional): If using a tagged skill, its rating. Will default to 1.
+- Complication (optional): If the GM has determined the check has additional complications, enter the rating. Will default to 20.
+- Difficulty (optional): The difficulty for the check. Will default to 0.
 
 | Description                | Formula                |
 | -------------------------- | ---------------------- |
@@ -189,6 +209,11 @@ The rules commands to get a quick reference to a particular rule. These will oft
 #### `injury` / `inj`
 
 The outside world can never hurt you! Uses the Vault-Tec recommended `!vats inj {hit location} [{hit location type}]` notation.
+
+Here is breakdown of the notation parameters:
+
+- Hit Location _(required)_: The hit location that received a critical hit
+- Hit Location Type (optional): The **Hit Locations Table** to use. If not provide it will use the `default` table.
 
 | Description      | Formula             |
 | ---------------- | ------------------- |
