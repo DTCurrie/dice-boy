@@ -54,7 +54,7 @@ We need to determine the parameters for Nate's combat check:
 
 - He is using a Combat Rifle, so he will be rolling **5** combat **dice**
 - The Combat Rifle does physical damage, so he will be using a **damage type** of **ph**
-- The Combat Rifle has two effects: `Vicious` and `Piercing 1`, so his effects will be **vicious,piercing1**
+- The Combat Rifle has two effects: `Vicious` and `Piercing 1`, so his **effects** will be **vicious,piercing1**
 - He chose to target the Mr. Gutsy's optics, so he will enter a **hit location** of **o**
   - Note: If Nate had not chosen a **hit location**, he would simply not enter one and **Dice Boy** would automatically determine it for him.
 - The Mr. Gutsy uses a unique **Hit Locations Table**, so the roll will use a **hit location type** of **handy**
