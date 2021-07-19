@@ -23,7 +23,7 @@ import {
   DamageEffect,
   DamageEffectType,
 } from "../../utils/damage/damage-effect";
-import { DamageType } from "../../utils/damage/damage";
+import { DamageType, damageTypeText } from "../../utils/damage/damage";
 import {
   getHitLocationText,
   HitLocation,
@@ -103,6 +103,7 @@ class CombatRollCommand extends Command {
     options: CombatRollOptions,
     {
       damage,
+      damageType,
       effects,
       hitLocation,
       hitLocationType,
@@ -125,7 +126,7 @@ class CombatRollCommand extends Command {
           fields: [
             {
               name: "Damage",
-              value: `${damage}`,
+              value: `${damage} ${capitalize(damageTypeText[damageType])}`,
               inline: true,
             },
             {
@@ -143,7 +144,7 @@ class CombatRollCommand extends Command {
           ].concat(
             effects.map(({ type, text }) => {
               return {
-                name: type.charAt(0).toUpperCase() + type.slice(1),
+                name: capitalize(type),
                 value: text,
                 inline: false,
               };
@@ -154,6 +155,7 @@ class CombatRollCommand extends Command {
           "🍀": () =>
             this.rerollOne(message, options, {
               damage,
+              damageType,
               effects,
               hitLocation,
               hitLocationType,
@@ -163,6 +165,7 @@ class CombatRollCommand extends Command {
           "🤞": () =>
             this.rerollTwo(message, options, {
               damage,
+              damageType,
               effects,
               hitLocation,
               hitLocationType,
@@ -172,6 +175,7 @@ class CombatRollCommand extends Command {
           "🎰": () =>
             this.rerollThree(message, options, {
               damage,
+              damageType,
               effects,
               hitLocation,
               hitLocationType,
@@ -181,6 +185,7 @@ class CombatRollCommand extends Command {
           "🔄": () =>
             this.rerollAll(message, options, {
               damage,
+              damageType,
               effects,
               hitLocation,
               hitLocationType,

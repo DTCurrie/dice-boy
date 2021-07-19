@@ -40,6 +40,7 @@ export interface CombatRollEffect {
 
 export interface CombatRollResult {
   damage: number;
+  damageType: DamageType;
   effects: DamageEffectResult[];
   hitLocation: HitLocation;
   hitLocationType: HitLocationType;
@@ -218,6 +219,7 @@ const handleRollResults = (
 
   const result = {
     damage,
+    damageType,
     effects,
     hitLocation,
     hitLocationType,
