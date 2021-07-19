@@ -220,6 +220,20 @@ Here is breakdown of the notation parameters:
 | Head             | `!vats inj h`       |
 | Mr. Handy Optics | `!vats inj o handy` |
 
+#### `quality` / `qual`
+
+The outside world can never hurt you! Uses the Vault-Tec recommended `!vats {quality}` notation.
+
+Here is breakdown of the notation parameters:
+
+- Quality _(required)_: The weapon quality you want to check the rules for (in [kebab-case](https://en.wiktionary.org/wiki/kebab_case))
+
+| Description  | Formula                   |
+| ------------ | ------------------------- |
+| Accurate     | `!vats qual accurate`     |
+| Night Vision | `!vats qual night-vision` |
+| Two-Handed   | `!vats qual two-handed`   |
+
 ### Utility
 
 - `help`: Displays a list of available commands, or detailed information for a specified command.
