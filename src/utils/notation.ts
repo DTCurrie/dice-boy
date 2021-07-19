@@ -27,6 +27,12 @@ export const injuryNotationRegex = new RegExp(
 export const skillNotation = `{target} [d{dice}][t{tag}][c{complication}] [{difficulty}]`;
 export const skillNotationRegex = /\d+(\s(d\d+)?(t\d+)?(c\d+)?)?(\s\d+)?/;
 
+// Qualities
+
+export const qualitiesNotation = `{quality}`;
+
+export const qualitiesNotationRegex = /(accurate|blast|close-quarters|concealed|debilitating|gatling|inaccurate|mine|night-vision|parry|recon|reliable|suppressed|thrown|two-handed|unreliable)/;
+
 // Utility
 
 export const notationNotes =

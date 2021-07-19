@@ -14,7 +14,7 @@ import {
   notationNotes,
   skillNotation,
   skillNotationRegex,
-} from "../../utils/rolls/notation";
+} from "../../utils/notation";
 import { getNextSymbolOrSpace } from "../../utils/text/parse";
 import { failureColor, successColor, warningColor } from "../../utils/color";
 

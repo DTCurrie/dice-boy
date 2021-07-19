@@ -18,7 +18,7 @@ import {
   combatNotation,
   combatNotationRegex,
   notationNotes,
-} from "../../utils/rolls/notation";
+} from "../../utils/notation";
 import {
   DamageEffect,
   DamageEffectType,

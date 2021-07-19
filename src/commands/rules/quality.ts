@@ -4,36 +4,28 @@ import { Menu } from "discord.js-menu";
 
 import { getAuthorData } from "../../utils/author";
 import {
-  injuryNotation,
-  injuryNotationRegex,
   notationNotes,
+  qualitiesNotation,
+  qualitiesNotationRegex,
 } from "../../utils/notation";
-import {
-  getCriticalHitLocation,
-  HitLocation,
-  HitLocationType,
-} from "../../utils/hit-locations";
 import { infoColor, warningColor } from "../../utils/color";
-import {
-  criticalHitInjuries,
-  CriticalHitLocation,
-} from "../../utils/damage/critical-hit";
 import { capitalize } from "../../utils/text/capitalize";
+import { weaponQualities, WeaponQuality } from "../../utils/weapons/qualities";
 
-class InjuryRuleCommand extends Command {
+class QualityRuleCommand extends Command {
   constructor(client: CommandoClient) {
     super(client, {
-      name: "injury",
-      aliases: ["inj"],
+      name: "quality",
+      aliases: ["qual"],
       group: "rules",
-      memberName: "injury",
-      description: `The outside world can never hurt you! Uses the Vault-Tec recommended ${injuryNotation} notation.`,
+      memberName: "quality",
+      description: `Extermination is everyone's job! Uses the Vault-Tec recommended ${qualitiesNotation} notation.`,
       clientPermissions: ["MANAGE_MESSAGES"],
       args: [
         {
           key: "formula",
           type: "string",
-          prompt: `Enter a hit location and optional type using the \`${injuryNotation}\` notation.${notationNotes}`,
+          prompt: `Enter a quality using the \`${qualitiesNotation}\` notation.${notationNotes}`,
         },
       ],
     });
@@ -41,26 +33,26 @@ class InjuryRuleCommand extends Command {
 
   private showResultsMessage = (
     message: CommandoMessage,
-    location: CriticalHitLocation
+    quality: WeaponQuality
   ) => {
     new Menu(message.channel as TextChannel, message.author.id, [
       {
         name: "main",
         content: new MessageEmbed({
           ...getAuthorData(this.client),
-          title: "Injury!",
+          title: "Weapon Quality!",
           color: infoColor,
 
-          description: "> The outside world can never hurt you!",
+          description: "> Extermination is everyone's job!",
           fields: [
             {
-              name: "Location",
-              value: capitalize(location),
+              name: "Quality",
+              value: capitalize(quality),
               inline: false,
             },
             {
               name: "Injury",
-              value: criticalHitInjuries[location],
+              value: weaponQualities[quality],
               inline: false,
             },
           ],
@@ -83,14 +75,15 @@ class InjuryRuleCommand extends Command {
         new MessageEmbed({
           ...authorData,
           title: "Error",
-          description: `Uh oh, there was a problem with your formula. Please use the Vault-Tec approved \`${injuryNotation}\` notation and try again!\n\t
+          description: `Uh oh, there was a problem with your formula. Please use the Vault-Tec approved \`${qualitiesNotation}\` notation and try again!\n\t
             Here is a few examples:
             \`\`\`
-| Description      | Formula |
-| ---------------- | ------- |
-| Head             | h       |
-| Mr. Handy Optics | o handy |
-| -------------------------- |
+| Description  | Formula      |
+| ------------ | ------------ |
+| Accurate     | accurate     |
+| Night Vision | night-vision |
+| Two-Handed   | two-handed   |
+| --------------------------- |
             \`\`\`\n
             ${errorMessage || ""}`,
           color: warningColor,
@@ -100,20 +93,15 @@ class InjuryRuleCommand extends Command {
       return null;
     };
 
-    if (injuryNotationRegex.test(formula)) {
+    if (qualitiesNotationRegex.test(formula)) {
       try {
-        const args = formula.split(" ");
-        const hitLocation = args[0] as HitLocation;
-        const hitLocationType =
-          (args[1] as HitLocationType) || HitLocationType.Default;
+        const quality = formula as WeaponQuality;
 
-        if (!hitLocation || !hitLocationType) {
+        if (!quality) {
           return showError();
         }
 
-        const location = getCriticalHitLocation(hitLocationType, hitLocation);
-
-        this.showResultsMessage(message, location);
+        this.showResultsMessage(message, quality);
 
         return null;
       } catch (error) {
@@ -125,4 +113,4 @@ class InjuryRuleCommand extends Command {
   };
 }
 
-export default InjuryRuleCommand;
+export default QualityRuleCommand;
