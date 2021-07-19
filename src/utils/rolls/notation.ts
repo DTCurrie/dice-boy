@@ -26,3 +26,8 @@ export const injuryNotationRegex = new RegExp(
 
 export const skillNotation = `{target} [d{dice}][t{tag}][c{complication}] [{difficulty}]`;
 export const skillNotationRegex = /\d+(\s(d\d+)?(t\d+)?(c\d+)?)?(\s\d+)?/;
+
+// Utility
+
+export const notationNotes =
+  "\nNote: `{}` indicate where a value should be entered, `[]` indicate an optional value. Do not include either `{}` or `[]` in your formula.\n";

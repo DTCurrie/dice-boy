@@ -6,6 +6,7 @@ import { getAuthorData } from "../../utils/author";
 import {
   injuryNotation,
   injuryNotationRegex,
+  notationNotes,
 } from "../../utils/rolls/notation";
 import {
   getCriticalHitLocation,
@@ -23,7 +24,7 @@ class CombatRollCommand extends Command {
   constructor(client: CommandoClient) {
     super(client, {
       name: "injury",
-      aliases: ["i"],
+      aliases: ["inj"],
       group: "rules",
       memberName: "injury",
       description: `The outside world can never hurt you! Uses the Vault-Tec recommended ${injuryNotation} notation.`,
@@ -32,7 +33,7 @@ class CombatRollCommand extends Command {
         {
           key: "formula",
           type: "string",
-          prompt: `Enter a enter hit location and optional type using the \`${injuryNotation}\` notation.\nNote: \`{}\` indicate where a value should be entered, \`[]\` indicate an optional value. Do not include either \`{}\` or \`[]\` in your formula.\n`,
+          prompt: `Enter a enter hit location and optional type using the \`${injuryNotation}\` notation.${notationNotes}`,
         },
       ],
     });

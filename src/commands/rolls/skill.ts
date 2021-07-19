@@ -10,7 +10,11 @@ import {
   SkillRollResult,
 } from "../../utils/rolls/skill-roll";
 import { getAuthorData } from "../../utils/author";
-import { skillNotation, skillNotationRegex } from "../../utils/rolls/notation";
+import {
+  notationNotes,
+  skillNotation,
+  skillNotationRegex,
+} from "../../utils/rolls/notation";
 import { getNextSymbolOrSpace } from "../../utils/text/parse";
 import { failureColor, successColor, warningColor } from "../../utils/color";
 
@@ -27,7 +31,7 @@ class SkillRollCommand extends Command {
         {
           key: "formula",
           type: "string",
-          prompt: `Enter a skill roll using the \`${skillNotation}\` notation.\nNote: \`{}\` indicate where a value should be entered, \`[]\` indicate an optional value. Do not include either \`{}\` or \`[]\` in your formula.\n`,
+          prompt: `Enter a skill roll using the \`${skillNotation}\` notation.${notationNotes}`,
         },
       ],
     });

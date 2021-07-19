@@ -17,6 +17,7 @@ import {
   combatHitLocationTypeNotation,
   combatNotation,
   combatNotationRegex,
+  notationNotes,
 } from "../../utils/rolls/notation";
 import {
   DamageEffect,
@@ -44,7 +45,7 @@ class CombatRollCommand extends Command {
         {
           key: "formula",
           type: "string",
-          prompt: `Enter a combat roll using the \`${combatNotation}\` notation.\nNote: \`{}\` indicate where a value should be entered, \`[]\` indicate an optional value. Do not include either \`{}\` or \`[]\` in your formula.\n`,
+          prompt: `Enter a combat roll using the \`${combatNotation}\` notation.${notationNotes}`,
         },
       ],
     });
