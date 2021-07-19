@@ -13,7 +13,7 @@ Use `!vats help all` help all to view a list of all commands, not just available
 
 Let's walk through a combat scenario to see **Dice Boy** in action.
 
-> As the sun sets over the wasteland, Nate notices a strange silhoutte on the horizon. Nate is being attacked by a Mr. Gutsy that is currently at long range. He knows he is in trouble one-on-one, so he needs to land a devastating blow to the Mr. Gutsy's optics, giving him the advantage in a fire fight. He pulls out his Vicious Piercing Combat Rifle, takes aim, and prepares to take a shot at the advancing robot. The GM warns him he saw a raider encampment not too far back, so a loud using a loud firearm will be risky.
+> As the sun sets over the wasteland, Nate notices a strange silhoutte on the horizon. Nate is being attacked by a Mr. Gutsy that is currently at long range. He knows he is in trouble one-on-one, so he needs to land a devastating blow to the Mr. Gutsy's optics, giving him the advantage in a fire fight. He pulls out his Vicious Piercing Combat Rifle, takes aim, and prepares to take a shot at the advancing robot. The GM warns him he saw a raider encampment not too far back, so a using a loud firearm will be risky.
 
 First, here is a review of the steps for making an attack from the _Fallout Core Rulebook_ as of (July 19th 2021):
 
