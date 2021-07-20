@@ -13,6 +13,7 @@ import { getAuthorData } from "../../utils/author";
 import {
   combatDamageEffectNotation,
   combatDamageEffectsNotation,
+  combatDamageTypeNotation,
   combatHitLocationNotation,
   combatHitLocationTypeNotation,
   combatNotation,
@@ -23,7 +24,7 @@ import {
   DamageEffect,
   DamageEffectType,
 } from "../../utils/damage/damage-effect";
-import { DamageType, damageTypeText } from "../../utils/damage/damage";
+import { DamageType } from "../../utils/damage/damage";
 import {
   getHitLocationText,
   HitLocation,
@@ -112,6 +113,8 @@ class CombatRollCommand extends Command {
     }: CombatRollResult
   ) => {
     const success = damage > 0;
+    const damageTypeText = damageType ? ` ${capitalize(damageType)}` : "";
+
     new Menu(message.channel as TextChannel, message.author.id, [
       {
         name: "main",
@@ -126,7 +129,7 @@ class CombatRollCommand extends Command {
           fields: [
             {
               name: "Damage",
-              value: `${damage} ${capitalize(damageTypeText[damageType])}`,
+              value: `${damage}${damageTypeText}`,
               inline: true,
             },
             {
@@ -213,15 +216,16 @@ class CombatRollCommand extends Command {
           description: `Uh oh, there was a problem with your formula. Please use the Vault-Tec approved \`${combatNotation}\` notation and try again!\n\t
             Here is a few examples:
             \`\`\`
-| Description                    | Formula             |
-| ------------------------------ | ------------------- |
-| 1 Physical                     | 1 ph                |
-| 2 Radiation Vicious            | 2 ra vicious        |
-| 3 Energy Piercing 2 Stun       | 3 en piercing2,stun |
-| 4 Poison Stun Head             | 4 po stun h         |
-| 1 Energy Stun Mr. Handy        | 1 en stun handy     |
-| 1 Energy Stun Optics Mr. Handy | 1 en stun o handy   |
-| ---------------------------------------------------- |
+| Description                    | Formula                              |
+| ------------------------------ | ------------------------------------ |
+| 1                              | !vats c 1                            |
+| 1 Physical                     | !vats c 1 phys                       |
+| 2 Radiation Vicious            | !vats c 2 rads vicious               |
+| 3 Energy Piercing 2 Stun       | !vats c 3 energy piercing2,stun      |
+| 4 Poison Stun Head             | !vats c 4 poison stun head           |
+| 1 Energy Stun Mr. Handy        | !vats c 1 energy stun handy          |
+| 1 Energy Stun Optics Mr. Handy | !vats c 1 energy stun optics handy   |
+| --------------------------------------------------------------------- |
             \`\`\`\n
             ${errorMessage || ""}`,
           color: warningColor,
@@ -235,8 +239,12 @@ class CombatRollCommand extends Command {
       try {
         const args = formula.split(" ");
         const dice = parseInt(args[0]);
-        const damageType = args[1] as DamageType;
-        const optionArgs = args.slice(2);
+        const optionArgs = args.slice(1);
+
+        const damageType = optionArgs.find(
+          (arg) =>
+            arg.search(new RegExp(`^${combatDamageTypeNotation.source}$`)) >= 0
+        ) as DamageType | undefined;
 
         const damageEffectArgs = optionArgs.find(
           (arg) =>
@@ -270,9 +278,10 @@ class CombatRollCommand extends Command {
               ) >= 0
           ) as HitLocationType) || HitLocationType.Default;
 
+        console.log("optionArgs", optionArgs);
+
         if (
           (dice && isNaN(dice)) ||
-          !damageType ||
           !!damageEffects.find(({ rating }) => rating && isNaN(rating))
         ) {
           return showError();
@@ -285,6 +294,8 @@ class CombatRollCommand extends Command {
           hitLocation,
           hitLocationType,
         };
+
+        console.log("options", options);
 
         const roll = combatRoll(options);
 

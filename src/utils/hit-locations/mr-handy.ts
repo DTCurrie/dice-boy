@@ -1,12 +1,12 @@
 import { CriticalHitLocation } from "../damage/critical-hit";
 
 export enum MrHandyHitLocation {
-  Optics = "o",
-  MainBody = "mb",
-  ArmOne = "a1",
-  ArmTwo = "a2",
-  ArmThree = "a3",
-  Thruster = "t",
+  Optics = "optics",
+  MainBody = "main-body",
+  ArmOne = "arm-1",
+  ArmTwo = "arm-2",
+  ArmThree = "arm-3",
+  Thruster = "thruster",
 }
 
 export const mrHandyHitLocationText = Object.freeze<{

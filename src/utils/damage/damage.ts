@@ -1,13 +1,6 @@
 export enum DamageType {
-  Physical = "ph",
-  Energy = "en",
-  Radiation = "ra",
-  Poison = "po",
+  Physical = "phys",
+  Energy = "energy",
+  Radiation = "rads",
+  Poison = "poison",
 }
-
-export const damageTypeText = Object.freeze({
-  [DamageType.Physical]: "physical",
-  [DamageType.Energy]: "energy",
-  [DamageType.Radiation]: "radiation",
-  [DamageType.Poison]: "poison",
-});

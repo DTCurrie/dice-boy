@@ -1,6 +1,6 @@
 import { DiceRoll } from "rpg-dice-roller";
 import { RollResult, RollResults } from "rpg-dice-roller/types/results";
-import { DamageType, damageTypeText } from "../damage/damage";
+import { DamageType } from "../damage/damage";
 
 import {
   DamageEffect,
@@ -18,7 +18,7 @@ import { roller } from "./roller";
 
 export interface CombatRollOptions {
   dice: number;
-  damageType: DamageType;
+  damageType?: DamageType;
   damageEffects?: DamageEffect[];
   hitLocation?: HitLocation;
   hitLocationType?: HitLocationType;
@@ -40,7 +40,7 @@ export interface CombatRollEffect {
 
 export interface CombatRollResult {
   damage: number;
-  damageType: DamageType;
+  damageType?: DamageType;
   effects: DamageEffectResult[];
   hitLocation: HitLocation;
   hitLocationType: HitLocationType;
@@ -121,7 +121,6 @@ const getEffects = (
   value: number,
   types: DamageEffect[],
   damage: number,
-  damageType: DamageType,
   hitLocationType: HitLocationType
 ): DamageEffectResult[] => {
   if (!value) {
@@ -133,7 +132,7 @@ const getEffects = (
       case DamageEffectType.Breaking:
         effects.push({
           type,
-          text: `Reduce the number of Combat Dice a target’s cover provides by ${value} permanently. If the target is not in cover, instead reduce the ${damageTypeText[damageType]} DR of the location struck by ${value}.`,
+          text: `Reduce the number of Combat Dice a target’s cover provides by ${value} permanently. If the target is not in cover, instead reduce the DR of the location struck by ${value}.`,
         });
         break;
       case DamageEffectType.Burst: {
@@ -155,9 +154,7 @@ const getEffects = (
       case DamageEffectType.PiercingX:
         effects.push({
           type,
-          text: `Ignore ${value * (rating || 1)} points of the target’s ${
-            damageTypeText[damageType]
-          } DR.`,
+          text: `Ignore ${value * (rating || 1)} points of the target’s DR.`,
         });
         break;
       case DamageEffectType.Radioactive: {
@@ -201,7 +198,7 @@ const getEffects = (
 
 const handleRollResults = (
   damage: number,
-  damageType: DamageType,
+  damageType: DamageType | undefined,
   effectOccurences: number,
   effectTypes: DamageEffect[],
   hitLocation: HitLocation,
@@ -213,7 +210,6 @@ const handleRollResults = (
     effectOccurences,
     effectTypes,
     damage,
-    damageType,
     hitLocationType
   );
 

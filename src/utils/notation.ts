@@ -1,17 +1,24 @@
 // Combat
 
-export const combatNotation = `{dice} {damage type} [{effects,...}] [{hit location}] [{hit location type}]`;
-export const combatDamageTypeNotation = /(ph|en|ra|po)/;
+export const combatNotation = `{dice} [{damage type}] [{effects,...}] [{hit location}] [{hit location type}]`;
+export const combatDamageTypeNotation = /(physical|energy|radiation|poison)/;
 export const combatDamageEffectNotation = /(burst|breaking|persistent|(piercing\d+)|radioactive|spread|stun|vicious)/;
 
 export const combatDamageEffectsNotation = new RegExp(
   `(${combatDamageEffectNotation.source}+)(,(${combatDamageEffectNotation.source}*))`
 );
 
-export const combatHitLocationNotation = /(h|t|la|ra|ll|rl|o|mb|a1|a2|a3)/;
+export const combatDefaultHitLocationNotation = /(head|torso|left-arm|right-arm|left-leg|right-leg)/;
+export const combatMrHandyHitLocationNotation = /(optics|main-body|arm-1|arm-2|arm-3|thruster)/;
+
+export const combatHitLocationNotation = new RegExp(
+  `(${combatDefaultHitLocationNotation.source}|${combatMrHandyHitLocationNotation.source})`
+);
+
 export const combatHitLocationTypeNotation = /(default|handy)/;
+
 export const combatNotationRegex = new RegExp(
-  `\\d+\\s${combatDamageTypeNotation.source}(\\s${combatDamageEffectsNotation.source})?(\\s${combatHitLocationNotation.source}+)?(\\s${combatHitLocationTypeNotation.source}+)?`
+  `\\d+(\\s${combatDamageTypeNotation.source})?(\\s${combatDamageEffectsNotation.source})?(\\s${combatHitLocationNotation.source})?(\\s${combatHitLocationTypeNotation.source})?`
 );
 
 // Injury

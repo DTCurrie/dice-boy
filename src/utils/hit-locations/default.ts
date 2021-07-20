@@ -1,24 +1,24 @@
 import { CriticalHitLocation } from "../damage/critical-hit";
 
 export enum DefaultHitLocation {
-  Head = "h",
-  Torso = "t",
-  LeftArm = "la",
-  RightArm = "ra",
-  LeftLeg = "ll",
-  RightLeg = "rl",
+  Head = "head",
+  Torso = "torso",
+  LeftArm = "left-arm",
+  RightArm = "right-arm",
+  LeftLeg = "left-leg",
+  RightLeg = "right-leg",
 }
-
 export const defaultHitLocationText = Object.freeze<{
   [key: string]: string;
 }>({
-  [DefaultHitLocation.Head]: "head",
-  [DefaultHitLocation.Torso]: "torso",
+  [DefaultHitLocation.Head]: DefaultHitLocation.Head,
+  [DefaultHitLocation.Torso]: DefaultHitLocation.Torso,
   [DefaultHitLocation.LeftArm]: "left arm",
   [DefaultHitLocation.RightArm]: "right arm",
   [DefaultHitLocation.LeftLeg]: "left leg",
   [DefaultHitLocation.RightLeg]: "right leg",
 });
+
 export const getDefaultHitLocation = (value: number): DefaultHitLocation => {
   switch (value) {
     case 1:

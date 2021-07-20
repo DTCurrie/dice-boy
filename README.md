@@ -53,7 +53,7 @@ With 3 successes Nate is going to succesfully hit the Mr. Gutsy. Nate chose a hi
 We need to determine the parameters for Nate's combat check:
 
 - He is using a Combat Rifle, so he will be rolling **5** combat **dice**
-- The Combat Rifle does physical damage, so he will be using a **damage type** of **ph**
+- The Combat Rifle does physical damage, so he will be using a **damage type** of **phys**
 - The Combat Rifle has two effects: `Vicious` and `Piercing 1`, so his **effects** will be **vicious,piercing1**
 - He chose to target the Mr. Gutsy's optics, so he will enter a **hit location** of **o**
   - Note: If Nate had not chosen a **hit location**, he would simply not enter one and **Dice Boy** would automatically determine it for him.
@@ -61,7 +61,7 @@ We need to determine the parameters for Nate's combat check:
 
 With all the combat parameters determined, it is time to do some damage! The combat roll command would look like:
 
-`!vats c 5 ph vicious,piercing1 o handy`
+`!vats c 5 phys vicious,piercing1 optics handy`
 
 And gets a result of:
 
@@ -89,37 +89,38 @@ Use the various roll commands to automate checks in Fallout RPG.
 
 #### `combat` / `c`
 
-Spread Democracy for Uncle Sam! Uses the Vault-Tec recommended `!vats c {dice} {damage type} [{effects,...}] [{hit location}] [{hit location type}]` notation.
+Spread Democracy for Uncle Sam! Uses the Vault-Tec recommended `!vats c {dice} [{damage type}] [{effects,...}] [{hit location}] [{hit location type}]` notation.
 
 Here is breakdown of the notation parameters:
 
 - Dice _(required)_: How many combat dice (CD) to roll.
-- Damage Type _(required)_: The Damage Type being inflicted.
+- Damage Type (optional): The Damage Type being inflicted.
 - Effects (optional): A comma delimited list of effects for the weapon
 - Hit Location (optional): The hit location to aim for, if not provided it will be determined automatically
 - Hit Location Type (optional): The **Hit Locations Table** to use. If not provide it will use the `default` table.
 
 The `combat` command will automate your damange rolls. This includes calculating damage, damage effects, and hit locations based on the provided options.
 
-| Description                    | Formula                       |
-| ------------------------------ | ----------------------------- |
-| 1 Physical                     | `!vats c 1 ph`                |
-| 2 Radiation Vicious            | `!vats c 2 ra vicious`        |
-| 3 Energy Piercing 2 Stun       | `!vats c 3 en piercing2,stun` |
-| 4 Poison Stun Head             | `!vats c 4 po stun h`         |
-| 1 Energy Stun Mr. Handy        | `!vats c 1 en stun handy`     |
-| 1 Energy Stun Optics Mr. Handy | `!vats c 1 en stun o handy`   |
+| Description                    | Formula                              |
+| ------------------------------ | ------------------------------------ |
+| 1                              | `!vats c 1`                          |
+| 1 Physical                     | `!vats c 1 phys`                     |
+| 2 Radiation Vicious            | `!vats c 2 rads vicious`             |
+| 3 Energy Piercing 2 Stun       | `!vats c 3 energy piercing2,stun`    |
+| 4 Poison Stun Head             | `!vats c 4 poison stun head`         |
+| 1 Energy Stun Mr. Handy        | `!vats c 1 energy stun handy`        |
+| 1 Energy Stun Optics Mr. Handy | `!vats c 1 energy stun optics handy` |
 
 ##### Damage Type Keys
 
 Use the following damage type keys for your combat rolls:
 
-| Damage Type | Key  |
-| ----------- | ---- |
-| Physical    | `ph` |
-| Energy      | `en` |
-| Radiation   | `ra` |
-| Poison      | `po` |
+| Damage Type | Key      |
+| ----------- | -------- |
+| Physical    | `phys`   |
+| Energy      | `energy` |
+| Radiation   | `rads`   |
+| Poison      | `poison` |
 
 ##### Damage Effect Keywords
 
@@ -149,25 +150,25 @@ Use the following hit locations for attacks. **Dice Boy** will use the `default`
 
 ###### Default Hit Locations
 
-| Damage Effect | Keyword |
-| ------------- | ------- |
-| Head          | `h`     |
-| Torso         | `t`     |
-| Left Arm      | `la`    |
-| Right Arm     | `ra`    |
-| Left Leg      | `ll`    |
-| Right Leg     | `rl`    |
+| Damage Effect | Keyword     |
+| ------------- | ----------- |
+| Head          | `head`      |
+| Torso         | `torso`     |
+| Left Arm      | `left-arm`  |
+| Right Arm     | `right-arm` |
+| Left Leg      | `left-leg`  |
+| Right Leg     | `right-leg` |
 
 ###### Mr. Handy Hit Locations
 
-| Damage Effect | Keyword |
-| ------------- | ------- |
-| Optics        | `o`     |
-| MainBody      | `mb`    |
-| Arm One       | `a1`    |
-| Arm Two       | `a2`    |
-| Arm Three     | `a3`    |
-| Thruster      | `t`     |
+| Damage Effect | Keyword     |
+| ------------- | ----------- |
+| Optics        | `optics`    |
+| Main Body     | `main-body` |
+| Arm One       | `arm-1`     |
+| Arm Two       | `arm-2`     |
+| Arm Three     | `arm-3`     |
+| Thruster      | `thruster`  |
 
 #### `roll` / `r`
 
@@ -212,13 +213,13 @@ The outside world can never hurt you! Uses the Vault-Tec recommended `!vats inj 
 
 Here is breakdown of the notation parameters:
 
-- Hit Location _(required)_: The hit location that received a critical hit
+- Hit Location _(required)_: The hit location that received a critical hit (in [kebab-case](https://en.wiktionary.org/wiki/kebab_case)
 - Hit Location Type (optional): The **Hit Locations Table** to use. If not provide it will use the `default` table.
 
-| Description      | Formula             |
-| ---------------- | ------------------- |
-| Head             | `!vats inj h`       |
-| Mr. Handy Optics | `!vats inj o handy` |
+| Description      | Formula                  |
+| ---------------- | ------------------------ |
+| Head             | `!vats inj head`         |
+| Mr. Handy Optics | `!vats inj optics handy` |
 
 #### `quality` / `qual`
 

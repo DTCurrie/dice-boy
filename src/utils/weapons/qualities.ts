@@ -17,6 +17,27 @@ export enum WeaponQuality {
   Unreliable = "unreliable",
 }
 
+export const weaponQualityText = Object.freeze<{
+  [key: string]: string;
+}>({
+  [WeaponQuality.Accurate]: WeaponQuality.Accurate,
+  [WeaponQuality.Blast]: WeaponQuality.Blast,
+  [WeaponQuality.CloseQuarters]: "close quarters",
+  [WeaponQuality.Concealed]: WeaponQuality.Concealed,
+  [WeaponQuality.Debilitating]: WeaponQuality.Debilitating,
+  [WeaponQuality.Gatling]: WeaponQuality.Gatling,
+  [WeaponQuality.Inaccurate]: WeaponQuality.Inaccurate,
+  [WeaponQuality.Mine]: WeaponQuality.Mine,
+  [WeaponQuality.NightVision]: "night vision",
+  [WeaponQuality.Parry]: WeaponQuality.Parry,
+  [WeaponQuality.Recon]: WeaponQuality.Recon,
+  [WeaponQuality.Reliable]: WeaponQuality.Reliable,
+  [WeaponQuality.Suppressed]: WeaponQuality.Suppressed,
+  [WeaponQuality.Thrown]: WeaponQuality.Thrown,
+  [WeaponQuality.TwoHanded]: WeaponQuality.TwoHanded,
+  [WeaponQuality.Unreliable]: WeaponQuality.Unreliable,
+});
+
 export const weaponQualities = Object.freeze({
   [WeaponQuality.Accurate]:
     "If you take the Aim minor action before attacking with an Accurate weapon, you may spend up to 3 AP to add +1 CD per AP spent to the attack’s damage. If you gain damage in this way, you may not spend ammunition for extra damage. A weapon cannot be both Accurate and Inaccurate.",
