@@ -26,10 +26,34 @@ class QualityRuleCommand extends Command {
           key: "formula",
           type: "string",
           prompt: `Enter a quality using the \`${qualitiesNotation}\` notation.${notationNotes}`,
+          default: "list",
         },
       ],
     });
   }
+
+  private showListMessage = (message: CommandoMessage) => {
+    new Menu(message.channel as TextChannel, message.author.id, [
+      {
+        name: "main",
+        content: new MessageEmbed({
+          ...getAuthorData(this.client),
+          title: "Weapon Qualities",
+          color: infoColor,
+
+          description: "> Extermination is everyone's job!",
+          fields: Object.keys(weaponQualities).map((key) => ({
+            name: capitalize(key),
+            value: weaponQualities[key as WeaponQuality],
+            inline: false,
+          })),
+        }),
+        reactions: {},
+      },
+    ]).start();
+
+    return null;
+  };
 
   private showResultsMessage = (
     message: CommandoMessage,
@@ -40,7 +64,7 @@ class QualityRuleCommand extends Command {
         name: "main",
         content: new MessageEmbed({
           ...getAuthorData(this.client),
-          title: "Weapon Quality!",
+          title: "Weapon Quality",
           color: infoColor,
 
           description: "> Extermination is everyone's job!",
@@ -60,6 +84,8 @@ class QualityRuleCommand extends Command {
         reactions: {},
       },
     ]).start();
+
+    return null;
   };
 
   public run = (
@@ -78,12 +104,13 @@ class QualityRuleCommand extends Command {
           description: `Uh oh, there was a problem with your formula. Please use the Vault-Tec approved \`${qualitiesNotation}\` notation and try again!\n\t
             Here is a few examples:
             \`\`\`
-| Description  | Formula      |
-| ------------ | ------------ |
-| Accurate     | accurate     |
-| Night Vision | night-vision |
-| Two-Handed   | two-handed   |
-| --------------------------- |
+| Description       | Formula        |
+| ----------------- | -------------- |
+| List of Qualities | list (default) |
+| Accurate          | accurate       |
+| Night Vision      | night-vision   |
+| Two-Handed        | two-handed     |
+| ---------------------------------- |
             \`\`\`\n
             ${errorMessage || ""}`,
           color: warningColor,
@@ -93,6 +120,10 @@ class QualityRuleCommand extends Command {
       return null;
     };
 
+    if (formula === "list") {
+      return this.showListMessage(message);
+    }
+
     if (qualitiesNotationRegex.test(formula)) {
       try {
         const quality = formula as WeaponQuality;
@@ -101,9 +132,7 @@ class QualityRuleCommand extends Command {
           return showError();
         }
 
-        this.showResultsMessage(message, quality);
-
-        return null;
+        return this.showResultsMessage(message, quality);
       } catch (error) {
         return showError(error);
       }

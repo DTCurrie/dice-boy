@@ -33,11 +33,35 @@ class InjuryRuleCommand extends Command {
         {
           key: "formula",
           type: "string",
-          prompt: `Enter a hit location and optional type using the \`${injuryNotation}\` notation.${notationNotes}`,
+          prompt: `Enter "list" for a list of injuries, or a hit location and optional type using the \`${injuryNotation}\` notation.${notationNotes}`,
+          default: "list",
         },
       ],
     });
   }
+
+  private showListMessage = (message: CommandoMessage) => {
+    new Menu(message.channel as TextChannel, message.author.id, [
+      {
+        name: "main",
+        content: new MessageEmbed({
+          ...getAuthorData(this.client),
+          title: "Injuries",
+          color: infoColor,
+
+          description: "> The outside world can never hurt you!",
+          fields: Object.keys(criticalHitInjuries).map((key) => ({
+            name: capitalize(key),
+            value: criticalHitInjuries[key as CriticalHitLocation],
+            inline: false,
+          })),
+        }),
+        reactions: {},
+      },
+    ]).start();
+
+    return null;
+  };
 
   private showResultsMessage = (
     message: CommandoMessage,
@@ -48,7 +72,7 @@ class InjuryRuleCommand extends Command {
         name: "main",
         content: new MessageEmbed({
           ...getAuthorData(this.client),
-          title: "Injury!",
+          title: "Injury",
           color: infoColor,
 
           description: "> The outside world can never hurt you!",
@@ -68,6 +92,8 @@ class InjuryRuleCommand extends Command {
         reactions: {},
       },
     ]).start();
+
+    return null;
   };
 
   public run = (
@@ -86,11 +112,12 @@ class InjuryRuleCommand extends Command {
           description: `Uh oh, there was a problem with your formula. Please use the Vault-Tec approved \`${injuryNotation}\` notation and try again!\n\t
             Here is a few examples:
             \`\`\`
-| Description      | Formula |
-| ---------------- | ------- |
-| Head             | h       |
-| Mr. Handy Optics | o handy |
-| -------------------------- |
+| Description      | Formula        |
+| ---------------- | -------------- |
+| List of Injuries | list (default) |
+| Head             | head           |
+| Mr. Handy Optics | optics handy   |
+| --------------------------------- |
             \`\`\`\n
             ${errorMessage || ""}`,
           color: warningColor,
@@ -99,6 +126,10 @@ class InjuryRuleCommand extends Command {
 
       return null;
     };
+
+    if (formula === "list") {
+      return this.showListMessage(message);
+    }
 
     if (injuryNotationRegex.test(formula)) {
       try {
@@ -113,9 +144,7 @@ class InjuryRuleCommand extends Command {
 
         const location = getCriticalHitLocation(hitLocationType, hitLocation);
 
-        this.showResultsMessage(message, location);
-
-        return null;
+        return this.showResultsMessage(message, location);
       } catch (error) {
         return showError(error);
       }

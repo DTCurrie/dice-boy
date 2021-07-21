@@ -75,7 +75,7 @@ So after the DR reductions and damage calculation, Nate ends up dealing **5 Phys
 
 To find out what the critical injury is for a Mr. Gutsy's optics is, you can use the `injury` command to check the rule. That command would look like:
 
-`!vats inj o handy`
+`!vats inj optics handy`
 
 Which would result in:
 
@@ -209,15 +209,18 @@ The rules commands to get a quick reference to a particular rule. These will oft
 
 #### `injury` / `inj`
 
-The outside world can never hurt you! Uses the Vault-Tec recommended `!vats inj {hit location} [{hit location type}]` notation.
+The outside world can never hurt you! Uses the Vault-Tec recommended `!vats inj [{hit location}] [{hit location type}]` notation.
 
 Here is breakdown of the notation parameters:
 
-- Hit Location _(required)_: The hit location that received a critical hit (in [kebab-case](https://en.wiktionary.org/wiki/kebab_case)
+- Hit Location (optional): The hit location that received a critical hit (in [kebab-case](https://en.wiktionary.org/wiki/kebab_case)
 - Hit Location Type (optional): The **Hit Locations Table** to use. If not provide it will use the `default` table.
+
+If no parameters are passed, a list of all injuries will be printed.
 
 | Description      | Formula                  |
 | ---------------- | ------------------------ |
+| List of Injuries | `list` (default)         |
 | Head             | `!vats inj head`         |
 | Mr. Handy Optics | `!vats inj optics handy` |
 
@@ -229,11 +232,14 @@ Here is breakdown of the notation parameters:
 
 - Quality _(required)_: The weapon quality you want to check the rules for (in [kebab-case](https://en.wiktionary.org/wiki/kebab_case))
 
-| Description  | Formula                   |
-| ------------ | ------------------------- |
-| Accurate     | `!vats qual accurate`     |
-| Night Vision | `!vats qual night-vision` |
-| Two-Handed   | `!vats qual two-handed`   |
+If no quality is passed, a list of all weapon qualities will be printed.
+
+| Description       | Formula                   |
+| ----------------- | ------------------------- |
+| List of Qualities | `list` (default)          |
+| Accurate          | `!vats qual accurate`     |
+| Night Vision      | `!vats qual night-vision` |
+| Two-Handed        | `!vats qual two-handed`   |
 
 ### Utility
 
