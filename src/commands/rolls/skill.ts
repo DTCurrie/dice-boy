@@ -91,7 +91,7 @@ class SkillRollCommand extends Command {
           fields: [
             {
               name: "Successes",
-              value: `${successes}${complicated ? " ⚠️" : ""}`,
+	      value: `${successes}/${options.difficulty} ${complicated ? " ⚠️" : ""}`,
               inline: true,
             },
             {
@@ -179,7 +179,7 @@ class SkillRollCommand extends Command {
         .slice(1)
         .find((arg) => /^-?[\d.]+(?:e-?\d+)?$/.test(arg));
       const difficulty =
-        (difficultyString && parseInt(difficultyString)) || undefined;
+        (difficultyString && parseInt(difficultyString)) || 0;
 
       let dice: number | undefined;
       let tag: number | undefined;

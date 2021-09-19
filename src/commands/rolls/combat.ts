@@ -53,7 +53,7 @@ class CombatRollCommand extends Command {
   }
 
   private getResultsText = (results: CombatRollData[]): string =>
-    `[ ${results.map((r) => r.output).join(", ")} ]`;
+    `[ ${results.map((r) => r.output).join(" ")} ]`;
 
   private rerollOne = (
     message: CommandoMessage,
@@ -120,12 +120,12 @@ class CombatRollCommand extends Command {
         name: "main",
         content: new MessageEmbed({
           ...getAuthorData(this.client),
-          title: success ? "Success!" : "Failure!",
-          color: success ? successColor : failureColor,
+	  title: damage > 0 ? "Hit!" : "Miss!",
+	  color: damage > 0 ? successColor : failureColor,
 
-          description: success
-            ? "> Your efforts will help build a better tomorrow!"
-            : "> Please report to your Overseer to determine remedial actions.",
+	  description: damage > 0
+	    ? "> A solid hit, they are gonna feel that tomorrow!"
+            : "> It goes wide, better luck next time.",
           fields: [
             {
               name: "Damage",
