@@ -48,18 +48,18 @@ export interface CombatRollResult {
   rolls: RollResult[];
 }
 
-const getOutput = (value: number, effect: number): string => {
+const getOutput = (value: number): string => {
   switch (value) {
     case 1:
-      return `<:CD_ONE:889203020510933044>`;
+      return `<:CD_ONE:889253196588015637>`;
     case 2:
-      return `<:CD_TWO:889203051599114281>`;
+      return `<:CD_TWO:889253227474866217>`;
     case 3:
     case 4:
-      return `<:CD_BLK:889203068091113583>`;
+      return `<:CD_BLK:889253139805503488>`;
     case 5:
     case 6:
-      return `<:CD_EFT:889203079981957151>`;
+      return `<:CD_EFT:889253170683977748>`;
     default:
       return `${value}`;
   }
@@ -94,7 +94,7 @@ const getRollResults = (
 } => {
   const results = rolls.reduce((accumulator, { value }: RollResult, index) => {
     const { damage, effect } = getCombatValue(value);
-    const output = getOutput(value, effect);
+    const output = getOutput(value);
 
     accumulator.push({
       index,
