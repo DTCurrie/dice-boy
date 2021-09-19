@@ -1,8 +1,10 @@
 # Dice Boy
 
-A discord bot for runnning Fallout RPG games: [Discord Invite](https://discord.com/oauth2/authorize?client_id=835523028918075403&scope=bot&permissions=8192)
+A discord bot for running Fallout RPG games: [Discord Invite](https://discord.com/oauth2/authorize?client_id=835523028918075403&scope=bot&permissions=270336)
 
 Tools for GMing a Fallout RPG game can be found [here](https://fallout-gm-tools.vercel.app/) ([git repo](https://github.com/DTCurrie/fallout-gm-tools)).
+
+**NOTE:** Make sure the bot's "Dice Boy" role has permissions to "Manage Messages" and "Use External Emojis" (these should be granted automatically by using the above invite link.)
 
 ## Usage
 
