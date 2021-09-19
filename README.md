@@ -2,6 +2,8 @@
 
 A discord bot for runnning Fallout RPG games: [Discord Invite](https://discord.com/oauth2/authorize?client_id=835523028918075403&scope=bot&permissions=8192)
 
+Tools for GMing a Fallout RPG game can be found [here](https://fallout-gm-tools.vercel.app/) ([git repo](https://github.com/DTCurrie/fallout-gm-tools)).
+
 ## Usage
 
 To run a command with **Dice Boy**, use the `!vats` command or `@Dice Boy` command. For example, `!vats command` or `@Dice Boy command`.
