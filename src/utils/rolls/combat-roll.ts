@@ -49,13 +49,20 @@ export interface CombatRollResult {
 }
 
 const getOutput = (value: number, effect: number): string => {
-  let output = `${value}`;
-
-  if (value > 0) {
-    output = effect ? `_**${value}**_` : `_${value}_`;
+  switch (value) {
+    case 1:
+      return `<:CD_ONE:889203020510933044>`;
+    case 2:
+      return `<:CD_TWO:889203051599114281>`;
+    case 3:
+    case 4:
+      return `<:CD_BLK:889203068091113583>`;
+    case 5:
+    case 6:
+      return `<:CD_EFT:889203079981957151>`;
+    default:
+      return `${value}`;
   }
-
-  return output;
 };
 
 const getDamage = (value: number) => {

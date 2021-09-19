@@ -53,7 +53,7 @@ class CombatRollCommand extends Command {
   }
 
   private getResultsText = (results: CombatRollData[]): string =>
-    `[ ${results.map((r) => r.output).join(", ")} ]`;
+    `[ ${results.map((r) => r.output).join(" ")} ]`;
 
   private rerollOne = (
     message: CommandoMessage,
