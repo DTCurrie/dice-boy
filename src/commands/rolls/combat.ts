@@ -120,12 +120,14 @@ class CombatRollCommand extends Command {
         name: "main",
         content: new MessageEmbed({
           ...getAuthorData(this.client),
-          title: success ? "Success!" : "Failure!",
-          color: success ? successColor : failureColor,
+	  title: damage > 0 ? (damage >= 5 ? "CRITICAL!": "Hit!") : "Miss!",
+	  color: damage > 0 ? successColor : failureColor,
 
-          description: success
-            ? "> Your efforts will help build a better tomorrow!"
-            : "> Please report to your Overseer to determine remedial actions.",
+	  description: damage > 0
+	    ? (damage >= 5
+	       ? "> You strike a fatal blow, they arn't getting up from that!"
+	       : "> A solid hit, they are gonna feel that tomorrow!")
+            : "> It goes wide, better luck next time.",
           fields: [
             {
               name: "Damage",
