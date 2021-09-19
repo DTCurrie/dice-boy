@@ -20,8 +20,6 @@ jobs:
       uses: actions/setup-node@v2.4.0
       with:
         node-version: 16.x
-        cache: pnpm
-        cache-dependency-path: pnpm-lock.yaml
 
     - name: Cache pnpm modules
       uses: actions/cache@v2
