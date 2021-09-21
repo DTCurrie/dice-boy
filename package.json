@@ -1,6 +1,6 @@
 {
   "name": "dice-boy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Fallout RPG dice rolling bot for Discord",
   "main": "dist/index.js",
   "devDependencies": {
